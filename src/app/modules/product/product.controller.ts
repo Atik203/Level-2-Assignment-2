@@ -40,11 +40,30 @@ const createProduct = async (req: Request, res: Response) => {
 
 const getAllProduct = async (req: Request, res: Response) => {
   try {
-    const result = await productService.getAllProductsFromDB();
+    let result;
+
+    const { searchTerm } = req.query;
+    if (searchTerm) {
+      result = await productService.getProductBySearchFromDb(
+        searchTerm as string,
+      );
+    } else {
+      result = await productService.getAllProductsFromDB();
+    }
+
+    if (!result) {
+      res.status(404).json({
+        success: false,
+        message: 'Products not found.',
+      });
+      return;
+    }
 
     res.status(200).json({
       success: true,
-      message: 'Products fetched successfully.',
+      message: searchTerm
+        ? `Products matching search term ${searchTerm} fetched successfully!`
+        : 'Products fetched successfully.',
       data: result,
     });
   } catch (error: unknown) {
@@ -179,40 +198,10 @@ const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
-const getProductBySearch = async (req: Request, res: Response) => {
-  try {
-    const { searchTerm } = req.query;
-
-    const result = await productService.getProductBySearchFromDb(
-      searchTerm as string,
-    );
-
-    res.status(200).json({
-      success: true,
-      message: `Products matching search term ${searchTerm} fetched successfully!`,
-      data: result,
-    });
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.log(error);
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: 'An unknown error occurred',
-      });
-    }
-  }
-};
-
 export const productController = {
   getAllProduct,
   createProduct,
   getProductById,
   updateProduct,
   deleteProduct,
-  getProductBySearch,
 };
