@@ -33,6 +33,23 @@ const createOrder = async (req: Request, res: Response) => {
   }
 };
 
+const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const result = await OrderService.getAllOrdersFromDB();
+    res.status(200).json({
+      success: true,
+      message: 'All orders fetched successfully',
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+};
+
 export const OrderController = {
   createOrder,
+  getAllOrders,
 };
