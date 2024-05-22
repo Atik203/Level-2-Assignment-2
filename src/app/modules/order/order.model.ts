@@ -1,3 +1,10 @@
+/*
+ * Title: Order Model
+ * Description: mongoose Order model for the order module.
+ * Author: Md. Atikur Rahaman
+ * Date: 22-05-2024
+ */
+
 import { model, Schema } from 'mongoose';
 import { TOrder } from './order.interface';
 

@@ -1,3 +1,10 @@
+/*
+ * Title: Product Interface
+ * Description: interface for the product
+ * Author: Md. Atikur Rahaman
+ * Date: 22-05-2024
+ */
+
 import { Document } from 'mongoose';
 export interface TVariant {
   type: string;

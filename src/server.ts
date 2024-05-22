@@ -1,3 +1,10 @@
+/*
+ * Title: Server File
+ * Description: Server file for the project
+ * Author: Md. Atikur Rahaman
+ * Date: 22-05-2024
+ */
+
 import mongoose from 'mongoose';
 import app from './app';
 import config from './app/config';

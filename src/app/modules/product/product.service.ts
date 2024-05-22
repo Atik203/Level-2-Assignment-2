@@ -1,3 +1,10 @@
+/*
+ * Title: Product Service
+ * Description: functions for the product module
+ * Author: Md. Atikur Rahaman
+ * Date: 22-05-2024
+ */
+
 import { TProduct } from './product.interface';
 import { Product } from './product.model';
 

@@ -1,6 +1,6 @@
 /*
  * Title: product.controller.ts
- * Description: In this file, we have defined the controller functions for the product module.
+ * Description:  the controller functions for the product module.
  * Author: Md. Atikur Rahaman
  * Date: 22-05-2024
  */

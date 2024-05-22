@@ -1,3 +1,10 @@
+/*
+ * Title: Order Service
+ * Description: order service related functions for the order module.
+ * Author: Md. Atikur Rahaman
+ * Date: 22-05-2024
+ */
+
 import { TOrder } from './order.interface';
 import { Order } from './order.model';
 

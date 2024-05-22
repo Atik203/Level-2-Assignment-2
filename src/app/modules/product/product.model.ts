@@ -1,3 +1,9 @@
+/*
+ * Title: Product Model
+ * Description: mongoose Product model for the product module.
+ * Author: Md. Atikur Rahaman
+ * Date: 22-05-2024
+ */
 import { model, Schema } from 'mongoose';
 import { TInventory, TProduct, TVariant } from './product.interface';
 

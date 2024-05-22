@@ -1,3 +1,9 @@
+/*
+ * Title: Product Zod Validation
+ * Description: zod validation schema for the product module
+ * Author: Md. Atikur Rahaman
+ * Date: 22-05-2024
+ */
 import { z } from 'zod';
 
 export const variantValidationSchema = z.object({

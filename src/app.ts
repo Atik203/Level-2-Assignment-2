@@ -1,3 +1,10 @@
+/*
+ * Title: App File
+ * Description: App file for the project
+ * Author: Md. Atikur Rahaman
+ * Date: 22-05-2024
+ */
+
 import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 import { orderRoute } from './app/modules/order/order.route';
