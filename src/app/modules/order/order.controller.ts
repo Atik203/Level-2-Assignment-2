@@ -1,11 +1,46 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
+import { productService } from '../product/product.service';
 import { OrderService } from './order.service';
 import { orderValidationSchemaZod } from './order.zod.validation';
 
 const createOrder = async (req: Request, res: Response) => {
   try {
     const order = req.body;
+    const productId: string = order.productId;
+
+    const product = await productService.getProductByIdFromDB(productId);
+
+    if (!product) {
+      res.status(404).json({
+        success: false,
+        message: 'Product not found',
+      });
+      return;
+    }
+    const productQuantity = product.inventory.quantity;
+    const inStock = product.inventory.inStock;
+    const orderQuantity = order.quantity;
+
+    if (orderQuantity > productQuantity) {
+      res.status(400).json({
+        success: false,
+        message: 'Insufficient quantity available in inventory',
+      });
+      return;
+    }
+
+    if (!inStock) {
+      res.status(400).json({
+        success: false,
+        message: 'Product is out of stock',
+      });
+      return;
+    }
+
+    const newQuantity = productQuantity - orderQuantity;
+    await productService.updateProductStock(product, newQuantity);
+
     const orderZodParse = orderValidationSchemaZod.parse(order);
     const result = await OrderService.createOrderIntoDB(orderZodParse);
     res.status(200).json({

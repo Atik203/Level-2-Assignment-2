@@ -39,6 +39,15 @@ const getProductBySearchFromDb = async (searchTerm: string) => {
   return result;
 };
 
+const updateProductStock = async (product: TProduct, newQuantity: number) => {
+  product.inventory.quantity = newQuantity;
+  if (newQuantity === 0) {
+    product.inventory.inStock = false;
+  }
+
+  await product.save();
+};
+
 export const productService = {
   createProductIntoDB,
   getAllProductsFromDB,
@@ -46,4 +55,5 @@ export const productService = {
   updateProductIntoDB,
   deleteProductFromDB,
   getProductBySearchFromDb,
+  updateProductStock,
 };
