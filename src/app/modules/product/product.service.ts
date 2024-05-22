@@ -27,10 +27,23 @@ const deleteProductFromDB = async (id: string): Promise<TProduct | null> => {
   const result = await Product.findByIdAndDelete(id);
   return result;
 };
+
+const getProductBySearchFromDb = async (searchTerm: string) => {
+  const regex = new RegExp(searchTerm, 'i'); // i for case insensitive
+
+  // get all the product based on the search term
+  const result = await Product.find({
+    $or: [{ name: regex }, { description: regex }, { category: regex }],
+  });
+
+  return result;
+};
+
 export const productService = {
   createProductIntoDB,
   getAllProductsFromDB,
   getProductByIdFromDB,
   updateProductIntoDB,
   deleteProductFromDB,
+  getProductBySearchFromDb,
 };

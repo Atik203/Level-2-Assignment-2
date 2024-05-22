@@ -179,10 +179,40 @@ const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
+const getProductBySearch = async (req: Request, res: Response) => {
+  try {
+    const { searchTerm } = req.query;
+
+    const result = await productService.getProductBySearchFromDb(
+      searchTerm as string,
+    );
+
+    res.status(200).json({
+      success: true,
+      message: `Products matching search term ${searchTerm} fetched successfully!`,
+      data: result,
+    });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(error);
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'An unknown error occurred',
+      });
+    }
+  }
+};
+
 export const productController = {
   getAllProduct,
   createProduct,
   getProductById,
   updateProduct,
   deleteProduct,
+  getProductBySearch,
 };
