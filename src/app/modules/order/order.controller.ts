@@ -94,7 +94,7 @@ const getAllOrders = async (req: Request, res: Response) => {
       result = await OrderService.getAllOrdersFromDB();
     }
 
-    if (result) {
+    if (result && result.length > 0) {
       res.status(200).json({
         success: true,
         message: email

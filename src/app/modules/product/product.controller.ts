@@ -68,7 +68,7 @@ const getAllProduct = async (req: Request, res: Response) => {
     }
 
     // Check if the result is empty. If empty, return a 404 status code with a message.
-    if (!result) {
+    if (!result || result.length === 0) {
       res.status(404).json({
         success: false,
         message: 'Products not found.',
