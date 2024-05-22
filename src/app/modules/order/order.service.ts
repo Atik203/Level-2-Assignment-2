@@ -11,8 +11,11 @@ const getAllOrdersFromDB = async (): Promise<TOrder[]> => {
   return result;
 };
 
-const getOrderByEmailFromDB = async (email: string): Promise<TOrder | null> => {
-  const result = await Order.findOne({ email });
+const getOrderByEmailFromDB = async (
+  email: string,
+): Promise<TOrder[] | null> => {
+  console.log(email);
+  const result = await Order.find({ email });
   return result;
 };
 
