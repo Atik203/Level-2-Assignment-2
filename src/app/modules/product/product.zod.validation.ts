@@ -9,6 +9,7 @@ export const productValidationSchema = z.object({
   name: z.string().min(1, { message: 'Name cannot be empty' }),
   description: z.string().min(1, { message: 'Description cannot be empty' }),
   price: z.number().min(0, { message: 'Price cannot be negative' }),
+  category: z.string().min(1, { message: 'Category cannot be empty' }),
   tags: z.array(z.string().min(1, { message: 'Each tag cannot be empty' })),
   variants: z.array(variantValidationSchema),
   inventory: z.object({

@@ -36,12 +36,16 @@ export const productSchema = new Schema<TProduct>({
     type: Number,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   tags: {
     type: [String],
     required: true,
   },
-  variants: variantSchema,
+  variants: [variantSchema],
   inventory: inventorySchema,
 });
 
-const Product = model<TProduct>('Product', productSchema);
+export const Product = model<TProduct>('Product', productSchema);

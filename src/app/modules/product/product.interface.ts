@@ -11,6 +11,7 @@ export interface TProduct {
   name: string;
   description: string;
   price: number;
+  category: string;
   tags: string[];
   variants: TVariant[];
   inventory: TInventory;
