@@ -63,17 +63,24 @@ const getAllProduct = async (req: Request, res: Response) => {
       result = await productService.getProductBySearchFromDb(
         searchTerm as string,
       );
+      // If the search term didn't match any products, return a 404 status code with a message.
+      if (!result || result.length === 0) {
+        res.status(404).json({
+          success: false,
+          message: `No products found matching search term '${searchTerm}'.`,
+        });
+        return;
+      }
     } else {
       result = await productService.getAllProductsFromDB();
-    }
-
-    // Check if the result is empty. If empty, return a 404 status code with a message.
-    if (!result || result.length === 0) {
-      res.status(404).json({
-        success: false,
-        message: 'Products not found.',
-      });
-      return;
+      // If there are no products at all, return a 404 status code with a message.
+      if (!result || result.length === 0) {
+        res.status(404).json({
+          success: false,
+          message: 'No products found.',
+        });
+        return;
+      }
     }
 
     res.status(200).json({
