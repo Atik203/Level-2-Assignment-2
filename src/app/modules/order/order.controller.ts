@@ -91,7 +91,7 @@ const getAllOrders = async (req: Request, res: Response) => {
     if (email) {
       result = await OrderService.getOrderByEmailFromDB(email as string);
       // If the email didn't match any orders, return a 404 status code with a message.
-      if (!result || result.length === 0) {
+      if (result && result.length === 0) {
         res.status(404).json({
           success: false,
           message: `No orders found for email '${email}'.`,
@@ -101,7 +101,7 @@ const getAllOrders = async (req: Request, res: Response) => {
     } else {
       result = await OrderService.getAllOrdersFromDB();
       // If there are no orders at all, return a 404 status code with a message.
-      if (!result || result.length === 0) {
+      if (result && result.length === 0) {
         res.status(404).json({
           success: false,
           message: 'No orders found.',
