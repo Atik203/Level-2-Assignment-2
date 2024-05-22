@@ -90,24 +90,32 @@ const getAllOrders = async (req: Request, res: Response) => {
     // Check if email is provided in the query
     if (email) {
       result = await OrderService.getOrderByEmailFromDB(email as string);
+      // If the email didn't match any orders, return a 404 status code with a message.
+      if (!result || result.length === 0) {
+        res.status(404).json({
+          success: false,
+          message: `No orders found for email '${email}'.`,
+        });
+        return;
+      }
     } else {
       result = await OrderService.getAllOrdersFromDB();
+      // If there are no orders at all, return a 404 status code with a message.
+      if (!result || result.length === 0) {
+        res.status(404).json({
+          success: false,
+          message: 'No orders found.',
+        });
+        return;
+      }
     }
-
-    if (result && result.length > 0) {
-      res.status(200).json({
-        success: true,
-        message: email
-          ? 'Orders fetched successfully for user email!'
-          : 'All orders fetched successfully!',
-        data: result,
-      });
-    } else {
-      res.status(404).json({
-        success: false,
-        message: 'Order not found',
-      });
-    }
+    res.status(200).json({
+      success: true,
+      message: email
+        ? `Orders fetched successfully for email '${email}'!`
+        : 'All orders fetched successfully!',
+      data: result,
+    });
   } catch (error: unknown) {
     if (error instanceof Error) {
       res.status(500).json({
