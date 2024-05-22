@@ -19,7 +19,7 @@ app.use('/api/products/', productRoute);
 app.use('/api/orders/', orderRoute);
 
 app.get('/', async (req: Request, res: Response) => {
-  res.send('Hello World! This is a simple Express app.');
+  res.send('Server is running');
 });
 
 app.use('*', (req: Request, res: Response) => {
