@@ -49,7 +49,32 @@ const getAllOrders = async (req: Request, res: Response) => {
   }
 };
 
+const getOrderByEmail = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.query;
+    const result = await OrderService.getOrderByEmailFromDB(email as string);
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'Order fetched successfully',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Order not found',
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+};
+
 export const OrderController = {
   createOrder,
   getAllOrders,
+  getOrderByEmail,
 };
