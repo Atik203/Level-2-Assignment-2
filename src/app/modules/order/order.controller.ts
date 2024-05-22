@@ -108,11 +108,18 @@ const getAllOrders = async (req: Request, res: Response) => {
         message: 'Order not found',
       });
     }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Internal Server Error',
-    });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'Internal Server Error',
+      });
+    }
   }
 };
 

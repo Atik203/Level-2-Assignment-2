@@ -4,7 +4,6 @@
  * Author: Md. Atikur Rahaman
  * Date: 22-05-2024
  */
-
 import { Request, Response } from 'express';
 import { z } from 'zod';
 import { TProduct } from './product.interface';
@@ -38,7 +37,6 @@ const createProduct = async (req: Request, res: Response) => {
     }
     // Check if the error is an instance of Error
     else if (error instanceof Error) {
-      console.log(error);
       res.status(500).json({
         success: false,
         message: error.message,
@@ -87,7 +85,6 @@ const getAllProduct = async (req: Request, res: Response) => {
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.log(error);
       res.status(500).json({
         success: false,
         message: error.message,
@@ -123,7 +120,6 @@ const getProductById = async (req: Request, res: Response) => {
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.log(error);
       res.status(500).json({
         success: false,
         message: error.message,
@@ -170,7 +166,6 @@ const updateProduct = async (req: Request, res: Response) => {
         message: error.issues.map((issue) => issue.message).join(', '),
       });
     } else if (error instanceof Error) {
-      console.log(error);
       res.status(500).json({
         success: false,
         message: error.message,
@@ -206,7 +201,6 @@ const deleteProduct = async (req: Request, res: Response) => {
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.log(error);
       res.status(500).json({
         success: false,
         message: error.message,
