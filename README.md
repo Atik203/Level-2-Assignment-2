@@ -1,14 +1,14 @@
 ## Level 2 Assignment 2 - Node.js Backend Application
 
-This is a Node.js backend application using Express.js, MongoDB, Mongoose, TypeScript, Zod, and Yarn. The application serves as a solution for the Level 2 Assignment 2.
+This is a Node.js backend application using Express.js, MongoDB, Mongoose, TypeScript, Zod, and Yarn.
 
-## Prerequisites
+### Prerequisites
 
 - Node.js
 - Yarn
 - MongoDB
 
-## Installation
+### Installation
 
 1. Clone the repository:
 
@@ -33,17 +33,58 @@ yarn Install
 
 4. Set up the MongoDB database URL in the `.env` file, following the format provided in the `.env.example` file.
 
-5. Start the application:
+### Running the Application
+
+1. Start the application in development mode:
 
 ```
 yarn start:dev
 
 ```
 
-6. To build the application:
+2. Or, to start the application in production mode:
+
+```
+yarn start:prod
+
+```
+
+### Building the Application
+
+1. To build the application:
 
 ```
 yarn build
+```
+
+### Linting and Formatting
+
+1. To lint the code:
+
+```
+yarn lint
+
+```
+
+2. To automatically fix linting errors:
+
+```
+yarn lint:fix
+
+```
+
+3. To format the code with Prettier:
+
+```
+yarn prettier
+
+```
+
+4. To automatically fix formatting errors with Prettier:
+
+```
+yarn prettier:fix
+
 ```
 
 Enjoy using the application!
