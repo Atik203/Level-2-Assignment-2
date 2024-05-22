@@ -58,17 +58,25 @@ const getAllProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         // Check if the searchTerm is present in the query . If present, fetch products based on the search term.
         if (searchTerm) {
             result = yield product_service_1.productService.getProductBySearchFromDb(searchTerm);
+            // If the search term didn't match any products, return a 404 status code with a message.
+            if (!result || result.length === 0) {
+                res.status(404).json({
+                    success: false,
+                    message: `No products found matching search term '${searchTerm}'.`,
+                });
+                return;
+            }
         }
         else {
             result = yield product_service_1.productService.getAllProductsFromDB();
-        }
-        // Check if the result is empty. If empty, return a 404 status code with a message.
-        if (!result) {
-            res.status(404).json({
-                success: false,
-                message: 'Products not found.',
-            });
-            return;
+            // If there are no products at all, return a 404 status code with a message.
+            if (!result || result.length === 0) {
+                res.status(404).json({
+                    success: false,
+                    message: 'No products found.',
+                });
+                return;
+            }
         }
         res.status(200).json({
             success: true,
