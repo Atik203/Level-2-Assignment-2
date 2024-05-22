@@ -1,15 +1,26 @@
+/*
+ * Title: product.controller.ts
+ * Description: In this file, we have defined the controller functions for the product module.
+ * Author: Md. Atikur Rahaman
+ * Date: 22-05-2024
+ */
+
 import { Request, Response } from 'express';
 import { z } from 'zod';
+import { TProduct } from './product.interface';
 import { productService } from './product.service';
 import { productValidationSchema } from './product.zod.validation';
 
+// createProduct function is used to create a new product in the database.
 const createProduct = async (req: Request, res: Response) => {
   try {
     const product = req.body;
 
     const zodParseProduct = productValidationSchema.parse(product);
 
-    const result = await productService.createProductIntoDB(zodParseProduct);
+    const result = await productService.createProductIntoDB(
+      zodParseProduct as TProduct,
+    );
 
     res.status(201).json({
       success: true,
@@ -17,12 +28,16 @@ const createProduct = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: unknown) {
+    // Check if the error is an instance of ZodError
     if (error instanceof z.ZodError) {
       res.status(400).json({
         success: false,
+        // Map through the issues array and join the messages with a comma.
         message: error.issues.map((issue) => issue.message).join(', '),
       });
-    } else if (error instanceof Error) {
+    }
+    // Check if the error is an instance of Error
+    else if (error instanceof Error) {
       console.log(error);
       res.status(500).json({
         success: false,
@@ -38,11 +53,14 @@ const createProduct = async (req: Request, res: Response) => {
   }
 };
 
+// getAllProduct function is used to fetch all products from the database.
 const getAllProduct = async (req: Request, res: Response) => {
   try {
     let result;
 
     const { searchTerm } = req.query;
+
+    // Check if the searchTerm is present in the query . If present, fetch products based on the search term.
     if (searchTerm) {
       result = await productService.getProductBySearchFromDb(
         searchTerm as string,
@@ -51,6 +69,7 @@ const getAllProduct = async (req: Request, res: Response) => {
       result = await productService.getAllProductsFromDB();
     }
 
+    // Check if the result is empty. If empty, return a 404 status code with a message.
     if (!result) {
       res.status(404).json({
         success: false,
@@ -82,6 +101,7 @@ const getAllProduct = async (req: Request, res: Response) => {
   }
 };
 
+// getProductById function is used to fetch a product by its id from the database.
 const getProductById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -117,6 +137,7 @@ const getProductById = async (req: Request, res: Response) => {
   }
 };
 
+// updateProduct function is used to update a product in the database.
 const updateProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -126,7 +147,7 @@ const updateProduct = async (req: Request, res: Response) => {
 
     const result = await productService.updateProductIntoDB(
       id,
-      zodParseProduct,
+      zodParseProduct as TProduct,
     );
 
     if (!result) {
@@ -163,6 +184,7 @@ const updateProduct = async (req: Request, res: Response) => {
   }
 };
 
+// deleteProduct function is used to delete a product from the database.
 const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
